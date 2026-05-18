@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,39 +10,49 @@ import Analytics from "./pages/Analytics";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
 
-      <Route
-        path="/register"
-        element={<Register />}
-      />
+    <BrowserRouter>
 
-      <Route
-        path="/dashboard"
-        element={<Dashboard />}
-      />
+      <Routes>
 
-      <Route
-        path="/customers"
-        element={<Customers />}
-      />
+        <Route
+          path="/"
+          element={<Login />}
+        />
 
-      <Route
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/customers"
+          element={<Customers />}
+        />
+
+        <Route
           path="/leads"
           element={<Leads />}
-      />
+        />
 
-      <Route
+        <Route
           path="/tasks"
           element={<Tasks />}
-      />
+        />
 
-      <Route
+        <Route
           path="/analytics"
           element={<Analytics />}
-      />
-    </Routes>
+        />
+
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 

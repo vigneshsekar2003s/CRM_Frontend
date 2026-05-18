@@ -13,7 +13,7 @@ function Customers() {
 
   const fetchCustomers = async () => {
     const res = await axios.get(
-      "http://localhost:5000/api/customers"
+      "https://crm-backend-iznr.onrender.com/api/customers"
     );
 
     setCustomers(res.data);
@@ -34,7 +34,7 @@ function Customers() {
     e.preventDefault();
 
     await axios.post(
-      "http://localhost:5000/api/customers",
+      "https://crm-backend-iznr.onrender.com/api/customers",
       formData
     );
 
@@ -50,7 +50,7 @@ function Customers() {
 
   const deleteCustomer = async (id) => {
     await axios.delete(
-      `http://localhost:5000/api/customers/${id}`
+      `https://crm-backend-iznr.onrender.com/api/customers/${id}`
     );
 
     fetchCustomers();
