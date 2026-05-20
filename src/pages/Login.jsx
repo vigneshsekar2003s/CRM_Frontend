@@ -27,20 +27,28 @@ function Login() {
     try {
 
       const res = await axios.post(
-         "https://crm-backend-3-a9ou.onrender.com/api/auth/login",
+        "https://crm-backend-5-9odz.onrender.com/api/auth/login",
         formData
       );
+
+      console.log(res.data);
 
       localStorage.setItem(
         "token",
         res.data.token
       );
 
+       alert("Login Success");
+
       navigate("/dashboard");
 
     } catch (error) {
 
-      alert("Login Failed");
+      console.log(error.response);
+
+      alert(error.response?.data?.message ||
+      "Backend Server Error"
+      );
 
     }
   };

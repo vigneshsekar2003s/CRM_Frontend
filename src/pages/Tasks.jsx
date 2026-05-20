@@ -13,7 +13,7 @@ function Tasks() {
 
   const fetchTasks = async () => {
     const res = await axios.get(
-      "https://crm-backend-iznr.onrender.com/api/tasks"
+    "https://crm-backend-5-9odz.onrender.com/api/tasks",
     );
 
     setTasks(res.data);
@@ -34,7 +34,7 @@ function Tasks() {
     e.preventDefault();
 
     await axios.post(
-      "https://crm-backend-iznr.onrender.com/api/tasks",
+      "https://crm-backend-5-9odz.onrender.com/api/tasks",
       formData
     );
 
@@ -50,7 +50,7 @@ function Tasks() {
 
   const deleteTask = async (id) => {
     await axios.delete(
-      `https://crm-backend-iznr.onrender.com/api/tasks/${id}`
+      `https://crm-backend-5-9odz.onrender.com/api/tasks/${id}`
     );
 
     fetchTasks();

@@ -13,7 +13,7 @@ function Customers() {
 
   const fetchCustomers = async () => {
     const res = await axios.get(
-      "https://crm-backend-iznr.onrender.com/api/customers"
+      "https://crm-backend-5-9odz.onrender.com/api/customers"
     );
 
     setCustomers(res.data);
@@ -34,7 +34,7 @@ function Customers() {
     e.preventDefault();
 
     await axios.post(
-      "https://crm-backend-iznr.onrender.com/api/customers",
+      "https://crm-backend-5-9odz.onrender.com/api/customers",
       formData
     );
 
@@ -50,7 +50,7 @@ function Customers() {
 
   const deleteCustomer = async (id) => {
     await axios.delete(
-      `https://crm-backend-iznr.onrender.com/api/customers/${id}`
+      `https://crm-backend-5-9odz.onrender.com/api/customers/${id}`
     );
 
     fetchCustomers();

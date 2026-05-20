@@ -15,7 +15,7 @@ function Leads() {
   const fetchLeads = async () => {
 
     const res = await axios.get(
-      "https://crm-backend-iznr.onrender.com/api/leads"
+      "https://crm-backend-5-9odz.onrender.com/api/leads"
     );
 
     setLeads(res.data);
@@ -42,7 +42,7 @@ function Leads() {
     e.preventDefault();
 
     await axios.post(
-      "https://crm-backend-iznr.onrender.com/api/leads",
+      "https://crm-backend-5-9odz.onrender.com/api/leads",
       formData
     );
 
@@ -60,7 +60,7 @@ function Leads() {
   const updateStatus = async (id, status) => {
 
     await axios.put(
-      `https://crm-backend-iznr.onrender.com/api/leads/${id}`,
+      `https://crm-backend-5-9odz.onrender.com/api/leads/${id}`,
       {
         status,
       }
@@ -73,7 +73,7 @@ function Leads() {
   const deleteLead = async (id) => {
 
     await axios.delete(
-      `https://crm-backend-iznr.onrender.com/api/leads/${id}`
+      `https://crm-backend-5-9odz.onrender.com/api/leads/${id}`
     );
 
     fetchLeads();
