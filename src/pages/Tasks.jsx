@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Tasks() {
+
   const [tasks, setTasks] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -11,52 +12,110 @@ function Tasks() {
     dueDate: "",
   });
 
-  const fetchTasks = async () => {
-    const res = await axios.get(
-    "https://crm-backend-5-9odz.onrender.com/api/tasks",
-    );
+  const [loading, setLoading] = useState(false);
 
-    setTasks(res.data);
+  const fetchTasks = async () => {
+
+    try {
+
+      const res = await axios.get(
+        "https://crm-backend-7-ly4a.onrender.com/api/tasks"
+      );
+
+      setTasks(res.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to fetch tasks");
+
+    }
   };
 
   useEffect(() => {
+
     fetchTasks();
+
   }, []);
 
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    await axios.post(
-      "https://crm-backend-5-9odz.onrender.com/api/tasks",
-      formData
-    );
+    setLoading(true);
 
-    fetchTasks();
+    try {
 
-    setFormData({
-      title: "",
-      description: "",
-      assignedTo: "",
-      dueDate: "",
-    });
+      await axios.post(
+        "https://crm-backend-7-ly4a.onrender.com/api/tasks",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      fetchTasks();
+
+      setFormData({
+        title: "",
+        description: "",
+        assignedTo: "",
+        dueDate: "",
+      });
+
+      alert("Task Added Successfully");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to add task"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
   };
 
   const deleteTask = async (id) => {
-    await axios.delete(
-      `https://crm-backend-5-9odz.onrender.com/api/tasks/${id}`
-    );
 
-    fetchTasks();
+    try {
+
+      await axios.delete(
+        `https://crm-backend-7-ly4a.onrender.com/api/tasks/${id}`
+      );
+
+      fetchTasks();
+
+      alert("Task Deleted");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to delete task");
+
+    }
   };
 
   return (
+
     <div className="p-8">
 
       <h1 className="text-4xl font-bold mb-8">
@@ -75,6 +134,7 @@ function Tasks() {
           value={formData.title}
           onChange={handleChange}
           className="border p-3 rounded"
+          required
         />
 
         <input
@@ -84,6 +144,7 @@ function Tasks() {
           value={formData.assignedTo}
           onChange={handleChange}
           className="border p-3 rounded"
+          required
         />
 
         <input
@@ -92,6 +153,7 @@ function Tasks() {
           value={formData.dueDate}
           onChange={handleChange}
           className="border p-3 rounded"
+          required
         />
 
         <input
@@ -101,10 +163,15 @@ function Tasks() {
           value={formData.description}
           onChange={handleChange}
           className="border p-3 rounded"
+          required
         />
 
-        <button className="bg-blue-600 text-white p-3 rounded col-span-2">
-          Add Task
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded col-span-2"
+        >
+          {loading ? "Loading..." : "Add Task"}
         </button>
 
       </form>
@@ -126,6 +193,7 @@ function Tasks() {
         <tbody>
 
           {tasks.map((task) => (
+
             <tr
               key={task._id}
               className="text-center border-t"
@@ -150,17 +218,20 @@ function Tasks() {
               </td>
 
               <td>
+
                 <button
                   onClick={() =>
                     deleteTask(task._id)
                   }
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
                 >
                   Delete
                 </button>
+
               </td>
 
             </tr>
+
           ))}
 
         </tbody>

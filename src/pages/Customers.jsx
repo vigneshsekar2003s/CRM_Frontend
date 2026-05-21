@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Customers() {
+
   const [customers, setCustomers] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -11,52 +12,110 @@ function Customers() {
     company: "",
   });
 
-  const fetchCustomers = async () => {
-    const res = await axios.get(
-      "https://crm-backend-5-9odz.onrender.com/api/customers"
-    );
+  const [loading, setLoading] = useState(false);
 
-    setCustomers(res.data);
+  const fetchCustomers = async () => {
+
+    try {
+
+      const res = await axios.get(
+        "https://crm-backend-7-ly4a.onrender.com/api/customers"
+      );
+
+      setCustomers(res.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to fetch customers");
+
+    }
   };
 
   useEffect(() => {
+
     fetchCustomers();
+
   }, []);
 
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    await axios.post(
-      "https://crm-backend-5-9odz.onrender.com/api/customers",
-      formData
-    );
+    setLoading(true);
 
-    fetchCustomers();
+    try {
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-    });
+      await axios.post(
+        "https://crm-backend-7-ly4a.onrender.com/api/customers",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      fetchCustomers();
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+      });
+
+      alert("Customer Added Successfully");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to add customer"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
   };
 
   const deleteCustomer = async (id) => {
-    await axios.delete(
-      `https://crm-backend-5-9odz.onrender.com/api/customers/${id}`
-    );
 
-    fetchCustomers();
+    try {
+
+      await axios.delete(
+        `https://crm-backend-7-ly4a.onrender.com/api/customers/${id}`
+      );
+
+      fetchCustomers();
+
+      alert("Customer Deleted");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to delete customer");
+
+    }
   };
 
   return (
+
     <div className="p-8">
 
       <h1 className="text-4xl font-bold mb-8">
@@ -74,7 +133,8 @@ function Customers() {
           placeholder="Name"
           value={formData.name}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -83,7 +143,8 @@ function Customers() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -92,7 +153,8 @@ function Customers() {
           placeholder="Phone"
           value={formData.phone}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -101,11 +163,16 @@ function Customers() {
           placeholder="Company"
           value={formData.company}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
-        <button className="bg-blue-600 text-white p-3 rounded col-span-4">
-          Add Customer
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded col-span-4"
+        >
+          {loading ? "Loading..." : "Add Customer"}
         </button>
 
       </form>
@@ -127,6 +194,7 @@ function Customers() {
         <tbody>
 
           {customers.map((customer) => (
+
             <tr
               key={customer._id}
               className="text-center border-t"
@@ -149,17 +217,20 @@ function Customers() {
               </td>
 
               <td>
+
                 <button
                   onClick={() =>
                     deleteCustomer(customer._id)
                   }
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
                 >
                   Delete
                 </button>
+
               </td>
 
             </tr>
+
           ))}
 
         </tbody>

@@ -11,6 +11,8 @@ function Login() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
 
     setFormData({
@@ -24,11 +26,18 @@ function Login() {
 
     e.preventDefault();
 
+    setLoading(true);
+
     try {
 
       const res = await axios.post(
-        "https://crm-backend-5-9odz.onrender.com/api/auth/login",
-        formData
+        "https://crm-backend-7-ly4a.onrender.com/api/auth/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       console.log(res.data);
@@ -38,22 +47,28 @@ function Login() {
         res.data.token
       );
 
-       alert("Login Success");
+      alert("Login Success");
 
       navigate("/dashboard");
 
     } catch (error) {
 
-      console.log(error.response);
+      console.log(error);
 
-      alert(error.response?.data?.message ||
-      "Backend Server Error"
+      alert(
+        error.response?.data?.message ||
+        error.message
       );
+
+    } finally {
+
+      setLoading(false);
 
     }
   };
 
   return (
+
     <div className="h-screen flex items-center justify-center bg-gray-100">
 
       <form
@@ -69,20 +84,28 @@ function Login() {
           type="email"
           name="email"
           placeholder="Email"
+          value={formData.email}
           className="w-full border p-3 mb-4 rounded"
           onChange={handleChange}
+          required
         />
 
         <input
           type="password"
           name="password"
           placeholder="Password"
+          value={formData.password}
           className="w-full border p-3 mb-4 rounded"
           onChange={handleChange}
+          required
         />
 
-        <button className="bg-blue-600 hover:bg-blue-700 text-white w-full p-3 rounded">
-          Login
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white w-full p-3 rounded"
+        >
+          {loading ? "Loading..." : "Login"}
         </button>
 
         <p className="mt-4 text-center">

@@ -12,14 +12,25 @@ function Leads() {
     company: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const fetchLeads = async () => {
 
-    const res = await axios.get(
-      "https://crm-backend-5-9odz.onrender.com/api/leads"
-    );
+    try {
 
-    setLeads(res.data);
+      const res = await axios.get(
+        "https://crm-backend-7-ly4a.onrender.com/api/leads"
+      );
 
+      setLeads(res.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to fetch leads");
+
+    }
   };
 
   useEffect(() => {
@@ -41,46 +52,92 @@ function Leads() {
 
     e.preventDefault();
 
-    await axios.post(
-      "https://crm-backend-5-9odz.onrender.com/api/leads",
-      formData
-    );
+    setLoading(true);
 
-    fetchLeads();
+    try {
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-    });
+      await axios.post(
+        "https://crm-backend-7-ly4a.onrender.com/api/leads",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      fetchLeads();
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+      });
+
+      alert("Lead Added Successfully");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to add lead"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
   };
 
   const updateStatus = async (id, status) => {
 
-    await axios.put(
-      `https://crm-backend-5-9odz.onrender.com/api/leads/${id}`,
-      {
-        status,
-      }
-    );
+    try {
 
-    fetchLeads();
+      await axios.put(
+        `https://crm-backend-7-ly4a.onrender.com/api/leads/${id}`,
+        {
+          status,
+        }
+      );
 
+      fetchLeads();
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to update status");
+
+    }
   };
 
   const deleteLead = async (id) => {
 
-    await axios.delete(
-      `https://crm-backend-5-9odz.onrender.com/api/leads/${id}`
-    );
+    try {
 
-    fetchLeads();
+      await axios.delete(
+        `https://crm-backend-7-ly4a.onrender.com/api/leads/${id}`
+      );
 
+      fetchLeads();
+
+      alert("Lead Deleted");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to delete lead");
+
+    }
   };
 
   return (
+
     <div className="p-8">
 
       <h1 className="text-4xl font-bold mb-8">
@@ -98,7 +155,8 @@ function Leads() {
           placeholder="Name"
           value={formData.name}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -107,7 +165,8 @@ function Leads() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -116,7 +175,8 @@ function Leads() {
           placeholder="Phone"
           value={formData.phone}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
         <input
@@ -125,11 +185,16 @@ function Leads() {
           placeholder="Company"
           value={formData.company}
           onChange={handleChange}
-          className="border p-3"
+          className="border p-3 rounded"
+          required
         />
 
-        <button className="bg-green-600 text-white p-3 rounded col-span-4">
-          Add Lead
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded col-span-4"
+        >
+          {loading ? "Loading..." : "Add Lead"}
         </button>
 
       </form>
@@ -141,13 +206,9 @@ function Leads() {
           <tr>
 
             <th className="p-4">Name</th>
-
             <th>Email</th>
-
             <th>Company</th>
-
             <th>Status</th>
-
             <th>Actions</th>
 
           </tr>
@@ -189,15 +250,10 @@ function Leads() {
                 >
 
                   <option>New</option>
-
                   <option>Contacted</option>
-
                   <option>Qualified</option>
-
                   <option>Proposal</option>
-
                   <option>Won</option>
-
                   <option>Lost</option>
 
                 </select>
@@ -210,7 +266,7 @@ function Leads() {
                   onClick={() =>
                     deleteLead(lead._id)
                   }
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
                 >
                   Delete
                 </button>
