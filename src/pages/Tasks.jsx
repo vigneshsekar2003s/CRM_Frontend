@@ -19,7 +19,7 @@ function Tasks() {
     try {
 
       const res = await axios.get(
-        "https://crm-backend-7-ly4a.onrender.com/api/tasks"
+        "https://crm-backend-xcgz.onrender.com/api/tasks"
       );
 
       setTasks(res.data);
@@ -57,7 +57,7 @@ function Tasks() {
     try {
 
       await axios.post(
-        "https://crm-backend-7-ly4a.onrender.com/api/tasks",
+        "https://crm-backend-xcgz.onrender.com/api/tasks",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ function Tasks() {
     try {
 
       await axios.delete(
-        `https://crm-backend-7-ly4a.onrender.com/api/tasks/${id}`
+        `https://crm-backend-xcgz.onrender.com/api/tasks/${id}`
       );
 
       fetchTasks();

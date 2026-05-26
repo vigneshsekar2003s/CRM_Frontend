@@ -19,7 +19,7 @@ function Leads() {
     try {
 
       const res = await axios.get(
-        "https://crm-backend-7-ly4a.onrender.com/api/leads"
+        "https://crm-backend-xcgz.onrender.com/api/leads"
       );
 
       setLeads(res.data);
@@ -57,7 +57,7 @@ function Leads() {
     try {
 
       await axios.post(
-        "https://crm-backend-7-ly4a.onrender.com/api/leads",
+        "https://crm-backend-xcgz.onrender.com/api/leads",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ function Leads() {
     try {
 
       await axios.put(
-        `https://crm-backend-7-ly4a.onrender.com/api/leads/${id}`,
+        `https://crm-backend-xcgz.onrender.com/api/leads/${id}`,
         {
           status,
         }
@@ -120,7 +120,7 @@ function Leads() {
     try {
 
       await axios.delete(
-        `https://crm-backend-7-ly4a.onrender.com/api/leads/${id}`
+        `https://crm-backend-xcgz.onrender.com/api/leads/${id}`
       );
 
       fetchLeads();
