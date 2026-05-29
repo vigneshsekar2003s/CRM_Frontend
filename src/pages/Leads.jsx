@@ -19,7 +19,7 @@ function Leads() {
     try {
 
       const res = await axios.get(
-        "https://crm-backend-xcgz.onrender.com/api/leads"
+        "https://crm-backend-2-9mwg.onrender.com/api/leads"
       );
 
       setLeads(res.data);
@@ -57,7 +57,7 @@ function Leads() {
     try {
 
       await axios.post(
-        "https://crm-backend-xcgz.onrender.com/api/leads",
+        "https://crm-backend-2-9mwg.onrender.com/api/leads",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ function Leads() {
     try {
 
       await axios.put(
-        `https://crm-backend-xcgz.onrender.com/api/leads/${id}`,
+        `https://crm-backend-2-9mwg.onrender.com/api/leads/${id}`,
         {
           status,
         }
@@ -120,7 +120,7 @@ function Leads() {
     try {
 
       await axios.delete(
-        `https://crm-backend-xcgz.onrender.com/api/leads/${id}`
+        `https://crm-backend-2-9mwg.onrender.com/api/leads/${id}`
       );
 
       fetchLeads();
@@ -191,10 +191,9 @@ function Leads() {
 
         <button
           type="submit"
-          disabled={loading}
           className="bg-green-600 hover:bg-green-700 text-white p-3 rounded col-span-4"
         >
-          {loading ? "Loading..." : "Add Lead"}
+          Add data
         </button>
 
       </form>

@@ -19,7 +19,7 @@ function Customers() {
     try {
 
       const res = await axios.get(
-        "https://crm-backend-xcgz.onrender.com/api/customers"
+        "https://crm-backend-2-9mwg.onrender.com/api/customers"
       );
 
       setCustomers(res.data);
@@ -57,7 +57,7 @@ function Customers() {
     try {
 
       await axios.post(
-        "https://crm-backend-xcgz.onrender.com/api/customers",
+        "https://crm-backend-2-9mwg.onrender.com/api/customers",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ function Customers() {
     try {
 
       await axios.delete(
-        `https://crm-backend-xcgz.onrender.com/api/customers/${id}`
+        `https://crm-backend-2-9mwg.onrender.com/api/customers/${id}`
       );
 
       fetchCustomers();
@@ -172,7 +172,7 @@ function Customers() {
           disabled={loading}
           className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded col-span-4"
         >
-          {loading ? "Loading..." : "Add Customer"}
+          Add Customer
         </button>
 
       </form>

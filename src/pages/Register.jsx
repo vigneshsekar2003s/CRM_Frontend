@@ -23,7 +23,7 @@ function Register() {
 
     try {
       await axios.post(
-        "https://crm-backend-xcgz.onrender.com/api/auth/register",
+        "https://crm-backend-2-9mwg.onrender.com/api/auth/register",
         formData
       );
 

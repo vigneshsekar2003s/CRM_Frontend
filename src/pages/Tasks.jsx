@@ -19,7 +19,7 @@ function Tasks() {
     try {
 
       const res = await axios.get(
-        "https://crm-backend-xcgz.onrender.com/api/tasks"
+        "https://crm-backend-2-9mwg.onrender.com/api/tasks"
       );
 
       setTasks(res.data);
@@ -57,7 +57,7 @@ function Tasks() {
     try {
 
       await axios.post(
-        "https://crm-backend-xcgz.onrender.com/api/tasks",
+        "https://crm-backend-2-9mwg.onrender.com/api/tasks", 
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ function Tasks() {
     try {
 
       await axios.delete(
-        `https://crm-backend-xcgz.onrender.com/api/tasks/${id}`
+        `https://crm-backend-2-9mwg.onrender.com/api/tasks/${id}`
       );
 
       fetchTasks();
@@ -171,7 +171,7 @@ function Tasks() {
           disabled={loading}
           className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded col-span-2"
         >
-          {loading ? "Loading..." : "Add Task"}
+          Add Task
         </button>
 
       </form>
